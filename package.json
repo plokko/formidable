@@ -1,0 +1,19 @@
+{
+  "name": "Formidable",
+  "version": "0.0.1-alpha",
+  "description": "Vuejs form generator",
+  "main": "src/index.js",
+  "scripts": {},
+  "keywords": [
+    "vuejs",
+    "form",
+    "axios"
+  ],
+  "author": "Plokko",
+  "license": "MIT",
+  
+  "requires":{
+    "vue": "^2.5.7",
+    "axios": "^0.17"
+  }
+}
