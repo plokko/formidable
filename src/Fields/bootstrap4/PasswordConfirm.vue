@@ -45,19 +45,9 @@
     </div>
 </template>
 <script>
+    import Field from '../Field';
     export default{
-        props:{
-            field:{type:Object,required:true,},
-            value:{required:true,},
-            name:{},
-            errors:{required:false,default:null},
-        },
-        data()
-        {
-            return {}
-        },
-        computed:{
-        },
+        extends: Field,
         methods:{
             onInput(event){
                 this.$emit('input',event.target.value);

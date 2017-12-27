@@ -4,7 +4,7 @@ import Formidable from './Formidable';
 
 export default {
     install(Vue, options) {
-        let fieldStyle=options.fieldStyle||'bootstrap4';
+        let fieldStyle= options && options.fieldStyle?options.fieldStyle:'bootstrap4';
         options = Object.assign({
             //Defaults
             formidableName  : 'formidable',

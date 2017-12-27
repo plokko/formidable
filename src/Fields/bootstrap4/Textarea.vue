@@ -6,7 +6,6 @@
         <textarea
                 :class="{'form-control':true,'is-invalid':this.errors}"
 
-
                 :disabled="field.disabled"
                 :required="field.required"
                 :minlength="field.minLength"
@@ -14,9 +13,8 @@
                 :rows="field.rows"
                 :cols="field.cols"
 
-                @input="onInput"
-
                 v-text="value"
+                @input="onInput"
                 ></textarea>
         <small class="form-text text-muted" v-if="field.helpText">{{field.helpText}}</small>
 
@@ -28,19 +26,9 @@
     </div>
 </template>
 <script>
+    import Field from '../Field';
     export default{
-        props:{
-            field:{type:Object,required:true,},
-            value:{required:true,},
-            name:{},
-            errors:{required:false,default:null},
-        },
-        data()
-        {
-            return {}
-        },
-        computed:{
-        },
+        extends : Field,
         methods:{
             onInput(event){
                 this.$emit('input',event.target.value);

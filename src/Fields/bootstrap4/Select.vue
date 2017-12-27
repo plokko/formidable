@@ -5,7 +5,7 @@
         <select
                 :class="{'form-control':true,'is-invalid':this.errors}"
 
-                v-model="_value"
+                v-model="model"
 
                 :disabled="field.disabled"
                 :required="field.required"
@@ -27,37 +27,8 @@
     </div>
 </template>
 <script>
+    import Field from '../Field';
     export default{
-        props:{
-            field:{type:Object,required:true,},
-            value:{required:true,},
-            name:{},
-            errors:{required:false,default:null},
-        },
-        data()
-        {
-            return {}
-        },
-        computed:{
-            _value:{
-                get(){return this.value;},
-                set(v){
-                    this.$emit('input',v);
-
-                }
-            }
-        },
-        methods:{
-            onInput(event){
-                let value = event.target.value;
-
-                if(this.field.multiple){
-                    value = Array.from(event.target.selectedOptions).map(o=>{return o.value;})
-                }
-
-                console.log('emit-input',{value});
-                this.$emit('input',value);
-            }
-        }
+        extends: Field
     }
 </script>
