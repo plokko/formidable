@@ -10,16 +10,15 @@
             </slot>
             <slot name="before"></slot>
             <!-- Field rendering scoped slot -->
-            <slot name="fields" :fields="">
-                <div :class="fieldBlockClass">
-                    <template v-for="field in fields">
-                        <component
-                                v-bind:is="field | getFieldcomponent"
-                                :field="field"
+            <slot name="fields" :fields="fieldData">
+                <div>
+                    <template v-for="field in fieldData">
+                        <component :is="{template:'<div><slot></slot></div>'}">
+                        <form-field
                                 :name="field.name"
-                                v-model="fieldValues[field.name]"
-                                :errors="getFieldErrors(field.name)"
-                                ></component>
+                                :key="field.name"
+                                ></form-field>
+                        </component>
 
                     </template>
                 </div>
@@ -35,12 +34,10 @@
 
             formClass   : {type:[String,Array,Object], default:''},
 
-            url         : { type:String, default:'' },
+            action      : { type:String, default:'' },
             method      : { type:String, default:'post'},
 
             fields      : { type:Array, required:true,},
-
-            useRows     : {type:Boolean,default:false},
 
 
         },
@@ -66,17 +63,49 @@
         mounted() {
         },
         computed: {
-            fieldBlockClass(){return this.useRows?'form-row':'';},
+
+            fieldComponents(){
+                let field=require('./FormField.vue');
+
+                let map =  {};
+
+                for(let field of this.fields){
+                    if(field.name){
+                        map[field.name]=Vue.extend({
+                            extends:field,
+                            data(){return {
+                                formidable:this,
+                                name:field.name
+                            };}
+                        });
+                    }
+                }
+                return map;
+            },
+
+            fieldData(){
+                let fields = this.fields.map((field)=>{
+                    return Object.assign({},field,{
+                            errors:this.fieldErrors[field.name]
+                        });
+                });
+                return fields;
+            },
+
             fieldMap(){
                 let map =  {};
+                let unmapped=[];
                 for(let field of this.fields){
                     if(field.name)
                         map[field.name]=field;
+                    else
+                        unmapped.push(field);
                 }
                 return map;
             },
         },
         methods: {
+
             onSubmit()
             {
                 this.submit();
@@ -85,7 +114,7 @@
                 this.error=null;
                 axios({
                     method : this.method,
-                    url    : this.url,
+                    url    : this.action,
                     data   : this.fieldValues,
                 }).then((r)=>{
                     this.$emit('submit',r);
@@ -112,7 +141,6 @@
                     });
 
             },
-
             processErrors(errors)
             {
                 let err={};
@@ -140,6 +168,9 @@
                 return err;
             },
 
+            getField(name){
+                return this.fieldMap[name];
+            },
             getFieldValue(name){
                 return this.fieldValues[name];
             },
@@ -149,19 +180,20 @@
             },
             getFieldErrors(name){
                 return this.fieldErrors[name];
-            }
+            },
+
+            resolveFieldComponentByName(name){
+                let field = this.fieldMap[name];
+                if(field.component)
+                    return field.component;
+                return this.resolveFieldComponent(field.type);
+            },
+
+            resolveFieldComponent(type){}
 
         },
-
         components: {
-
-
-            'input-text'        : require('./FormIdable/Input.vue'),
-            'input-checkbox'    : require('./FormIdable/Checkbox.vue'),
-            'input-select'      : require('./FormIdable/Select.vue'),
-            'v-select'          : require('./FormIdable/VSelect.vue'),
-            'input-textarea'    : require('./FormIdable/Textarea.vue'),
-
+            'form-field'        : require('./FormField.vue'),
         },
         filters: {
             getFieldcomponent(field){

@@ -1,6 +1,6 @@
 {
-  "name": "Formidable",
-  "version": "0.0.1-alpha",
+  "name": "formidable-vue",
+  "version": "0.0.2-alpha",
   "description": "Vuejs form generator",
   "main": "src/index.js",
   "scripts": {},

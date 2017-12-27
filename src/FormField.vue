@@ -1,54 +1,42 @@
 <template>
     <component
-            v-bind:is="getFieldcomponent(field)"
+            v-bind:is="component"
             :field="field"
             :name="field.name"
 
-            :value="value"
-            @input="onInput"
+            v-model="model"
 
-            :error="error"
+            :errors="errors"
             ></component>
 </template>
 <script>
     export default {
         name: "form-field",
         props: {
-            field:{type:Object,required:true},
-            value:{required:true},
-
-            error:{},
-
-            componentPrefix:{type:String,default:'field'},
-            componentMap:{type:Object,required:false,default:null,},
+            name:{type:String,required:true},
         },
         data() {
-            return {};
+
+            let formidable=this.$parent;
+            // find Formidable parent
+            while(formidable && formidable.$options.name!='formidable')
+                formidable=formidable.$parent;
+            return {
+                formidable
+            };
         },
 
-        methods: {
-            onInput(value){
-                this.$emit('input',value);
+        computed:{
+            field(){return this.formidable.getField(this.name);},
+            errors(){return this.formidable.getFieldErrors();},
+            model:{
+                get(){return this.formidable.getFieldValue(this.name);},
+                set(v){this.formidable.setFieldValue(this.name,v);}
             },
-
-            getFieldcomponent(field){
-                if(field.component)
-                    return field.component;
-
-                if(this.componentMap && this.componentMap[field.type]){
-                    return this.componentMap[field.type];
-                }
-                else
-                    return this.componentPrefix+'-'+field.type;
+            component(){
+                return this.formidable.resolveFieldComponentByName(this.name);
             }
-
         },
-        components: {
-            'field-text'        : require('./FormIdable/Input.vue'),
-            'field-checkbox'    : require('./FormIdable/Checkbox.vue'),
-            'field-select'      : require('./FormIdable/Select.vue'),
-            'field-textarea'    : require('./FormIdable/Textarea.vue'),
-        }
     }
 </script>
 <scss scoped>
