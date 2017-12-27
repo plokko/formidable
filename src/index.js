@@ -4,28 +4,30 @@ import Formidable from './Formidable';
 
 export default {
     install(Vue, options) {
+        let fieldStyle=options.fieldStyle||'bootstrap4';
         options = Object.assign({
-            formidableName:'formidable',
-            fieldName:'form-field',
-            resolveFieldComponent(type){
-                switch(type){
-                    case 'checkbox' : return require('./Formidable/Checkbox.vue');
-                    case 'select'   : return require('./Formidable/Select.vue');
-                    case 'textarea' : return require('./Formidable/Textarea.vue');
-                    //Default component
-                    default         : return require('./Formidable/Input.vue');
-                }
-            }
+            //Defaults
+            formidableName  : 'formidable',
+            fieldName       : 'form-field',
+            fieldResolver   : require('./Fields/'+fieldStyle+'/index').default
         },options);
 
-
-        Vue.component(options.formidableName,{
+        console.info({
             extends:Formidable,
             methods:{
                 resolveFieldComponent:options.resolveFieldComponent
             },
         });
 
+        //Load main Formidable component
+        Vue.component(options.formidableName,{
+            extends:Formidable,
+            methods:{
+                resolveFieldComponent:options.fieldResolver
+            },
+        });
+
+        //Load form-field component
         Vue.component(options.fieldName,require('./FormField'));
     }
 };
