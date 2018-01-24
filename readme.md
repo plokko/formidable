@@ -25,3 +25,41 @@ Vue.use(Formidable,{
   fieldResolver   : require('./Fields/'+style+'/index').default //TBD
 });
 ```
+
+In your page
+```html
+
+    <div id="app">
+        <formidable
+                action="destination-url"
+                :fields="fields"
+                @submit="onSubmit"
+                @error="onError"
+                >
+        </formidable>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:function(){return {
+                fields:[
+                    {name:'name',label:'Name',type:'text',placeholder:'username',required:true},
+                    {name:'email',label:'Email',type:'email',required:true},
+                    {name:'password',label:'Password',type:'password',placeholder:'',minLength:6},
+                    {name:'roles',label:'Roles',type:'select',placeholder:'',values:{1:'one',2:'two'},multiple:true ,value:[1,2]},
+                    {name:'active',label:'Active',type:'checkbox',placeholder:'',value:1},
+                ]
+            };},
+            methods:{
+                onSubmit(r){
+                    console.log('onsubmit',r);
+                },
+                onError(e){
+                    console.log('onError',e);
+                }
+            }
+
+        });
+    </script>
+    
+```
