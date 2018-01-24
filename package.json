@@ -1,19 +1,83 @@
 {
-  "name": "formidable-vue",
-  "version": "0.0.2-alpha",
+  "_args": [
+    [
+      {
+        "raw": "formidable-vue",
+        "scope": null,
+        "escapedName": "formidable-vue",
+        "name": "formidable-vue",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "C:\\wamp\\www\\topg"
+    ]
+  ],
+  "_from": "formidable-vue@latest",
+  "_id": "formidable-vue@0.0.1-alpha",
+  "_inCache": true,
+  "_location": "/formidable-vue",
+  "_nodeVersion": "6.11.1",
+  "_npmOperationalInternal": {
+    "host": "s3://npm-registry-packages",
+    "tmp": "tmp/formidable-vue-0.0.1-alpha.tgz_1514241497908_0.34427581750787795"
+  },
+  "_npmUser": {
+    "name": "plokko",
+    "email": "plo_koon@email.it"
+  },
+  "_npmVersion": "3.10.10",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "formidable-vue",
+    "scope": null,
+    "escapedName": "formidable-vue",
+    "name": "formidable-vue",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/formidable-vue/-/formidable-vue-0.0.1-alpha.tgz",
+  "_shasum": "0cee1fddc4dc31df0003e42a93554292a84c82ca",
+  "_shrinkwrap": null,
+  "_spec": "formidable-vue",
+  "_where": "C:\\wamp\\www\\topg",
+  "author": {
+    "name": "Plokko"
+  },
+  "dependencies": {},
   "description": "Vuejs form generator",
-  "main": "src/index.js",
-  "scripts": {},
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "0cee1fddc4dc31df0003e42a93554292a84c82ca",
+    "tarball": "https://registry.npmjs.org/formidable-vue/-/formidable-vue-0.0.1-alpha.tgz"
+  },
+  "gitHead": "3811da40f6849dc774c5c64b8893bbb6cc5f1dc1",
   "keywords": [
     "vuejs",
     "form",
     "axios"
   ],
-  "author": "Plokko",
   "license": "MIT",
-  
-  "requires":{
+  "main": "src/index.js",
+  "maintainers": [
+    {
+      "name": "plokko",
+      "email": "plo_koon@email.it"
+    }
+  ],
+  "name": "formidable-vue",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "requires": {
     "vue": "^2.5.7",
     "axios": "^0.17"
-  }
+  },
+  "scripts": {},
+  "version": "0.0.1-alpha"
 }

@@ -4,12 +4,13 @@ import Formidable from './Formidable';
 
 export default {
     install(Vue, options) {
-        let fieldStyle= options && options.fieldStyle?options.fieldStyle:'bootstrap4';
+        let style= options && options.style?options.style:'bootstrap4';
+        console.log({options,style})
         options = Object.assign({
             //Defaults
             formidableName  : 'formidable',
             fieldName       : 'form-field',
-            fieldResolver   : require('./Fields/'+fieldStyle+'/index').default
+            fieldResolver   : require('./Fields/'+style+'/index').default
         },options);
 
         console.info({
