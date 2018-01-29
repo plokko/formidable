@@ -9,20 +9,21 @@
                 <div class="alert alert-danger" v-if="error">{{error}}<button type=button class="close" aria-label="Close" @click="error=null"><span aria-hidden="true">&times;</span></button></div>
             </slot>
             <slot name="before"></slot>
-            <!-- Field rendering scoped slot -->
-            <slot name="fields" :fields="fieldData">
-                <div>
-                    <template v-for="field in fieldData">
-                        <component :is="{template:'<div><slot></slot></div>'}">
-                        <form-field
-                                :name="field.name"
-                                :key="field.name"
-                                ></form-field>
-                        </component>
+            <!-- Field scoped slot //-->
 
+            <slot name="fields"
+                  :fields="fieldData"
+                  >
+                    <template
+                            v-for="(field,name) in fieldData"
+                            >
+                            <form-field
+                                    :field="field"
+                                    :key="name"
+                                    ></form-field>
                     </template>
-                </div>
             </slot>
+            <!--// Field slot-->
             <slot></slot>
         </template>
     </form>
@@ -42,6 +43,7 @@
 
         },
         data() {
+
             let fieldValues = {};
             let fieldErrors = {};
             for(let field of this.fields)
@@ -61,48 +63,32 @@
             };
         },
         mounted() {
+
+            this.$on('value-changed',(values)=>{
+                for(let k in values){
+                    if(this.fieldValues[k]!==undefined)
+                        this.fieldValues[k]=values[k];
+                }
+            });
         },
         computed: {
 
-            fieldComponents(){
-                let field=require('./FormField.vue');
-
-                let map =  {};
-
-                for(let field of this.fields){
-                    if(field.name){
-                        map[field.name]=Vue.extend({
-                            extends:field,
-                            data(){return {
-                                formidable:this,
-                                name:field.name
-                            };}
-                        });
-                    }
-                }
-                return map;
-            },
 
             fieldData(){
+                let formidable=this;
                 let fields = this.fields.map((field)=>{
-                    return Object.assign({},field,{
-                            errors:this.fieldErrors[field.name]
-                        });
+                    return {
+                        ...field,
+                        //formidable:this,
+                        bus:this.bus,
+                        value:this.fieldValues[field.name],
+                        errors:this.fieldErrors[field.name],
+                        component:  this.resolveFieldComponent(field.type),
+                    };
                 });
                 return fields;
             },
 
-            fieldMap(){
-                let map =  {};
-                let unmapped=[];
-                for(let field of this.fields){
-                    if(field.name)
-                        map[field.name]=field;
-                    else
-                        unmapped.push(field);
-                }
-                return map;
-            },
         },
         methods: {
 
@@ -193,7 +179,7 @@
 
         },
         components: {
-            'form-field'        : require('./FormField.vue'),
+            'form-field' : require('./FormField.vue'),
         },
         filters: {
             getFieldcomponent(field){

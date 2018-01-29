@@ -63,3 +63,9 @@ In your page
     </script>
     
 ```
+
+
+## Templating
+Formidable integrates a template manager so you can easly switch between css frameworks without adapting or rewriting your code.
+The template you want to use is specified in the plugin initialization, via the _style_ option;
+each style is located under a folder with it's name, each folder has a index.js that resolves all the input types.

@@ -1,19 +1,17 @@
 <template>
     <component
-            v-bind:is="component"
+            :is="field.component"
             :field="field"
-            :name="field.name"
-
-            v-model="model"
-
-            :errors="errors"
+            :errors="field.errors"
+            :value="field.value"
+            @input="onInput"
             ></component>
 </template>
 <script>
     export default {
         name: "form-field",
         props: {
-            name:{type:String,required:true},
+            field:{type:Object,required:true},
         },
         data() {
 
@@ -27,16 +25,13 @@
         },
 
         computed:{
-            field(){return this.formidable.getField(this.name);},
-            errors(){return this.formidable.getFieldErrors();},
-            model:{
-                get(){return this.formidable.getFieldValue(this.name);},
-                set(v){this.formidable.setFieldValue(this.name,v);}
-            },
-            component(){
-                return this.formidable.resolveFieldComponentByName(this.name);
-            }
         },
+        methods:{
+            onInput(value){
+                if(this.field.name)
+                    this.formidable.$emit('value-changed',{[this.field.name]:value})
+            }
+        }
     }
 </script>
 <scss scoped>
