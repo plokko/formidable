@@ -6,7 +6,12 @@
         <slot v-if="showSuccess" name="success"></slot>
         <template v-else>
             <slot name="error" :error="error">
-                <div class="alert alert-danger" v-if="error">{{error}}<button type=button class="close" aria-label="Close" @click="error=null"><span aria-hidden="true">&times;</span></button></div>
+                <error-template
+                        v-if="error"
+                        :error="error"
+                        type="error"
+                        @close="error=null"
+                        ></error-template>
             </slot>
             <slot name="before"></slot>
             <!-- Field scoped slot //-->
@@ -73,7 +78,6 @@
         },
         computed: {
 
-
             fieldData(){
                 let formidable=this;
                 let fields = this.fields.map((field)=>{
@@ -120,9 +124,32 @@
                                 console.warn('error ['+k+']',errors[k] );
                                 this.fieldErrors[k] = errors[k] || null;
                             }
-                            this.error = e.response.data.message;
+                            //TODO:Check
+                            this.error={
+                                title: e.response.data.message,
+                                description:'',
+                                status:e.response.status,
+                            };
                         }else{
-                            this.error = e.response?`Error ${e.response.status}: `+e.response.statusText:e;
+                            let title='error';
+                            let description = '';
+                            let status=null;
+                            if(e.response){
+                                title       = e.response.statusText;
+                                description = e.response.data && e.response.data.message?e.response.data.message:'';
+                                status      = e.response.status;
+
+                            }else{
+                                title = e;
+
+                            }
+
+                            this.error = {
+                                title,
+                                description,
+                                status,
+                                response:e.response,
+                            };
                         }
                     });
 
@@ -175,7 +202,7 @@
                 return this.resolveFieldComponent(field.type);
             },
 
-            resolveFieldComponent(type){}
+            resolveFieldComponent(type){error('resolveFieldComponent not implemented!');}
 
         },
         components: {

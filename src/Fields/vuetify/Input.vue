@@ -6,7 +6,7 @@
         :required="field.required"
         :disabled="field.disabled"
 
-
+        :rules="rules"
 
         :dark="field.dark"
         :clearable="field.clearable"
@@ -19,6 +19,22 @@
 <script>
     import Field from '../Field';
     export default{
-        extends: Field
+        extends: Field,
+        methods:{
+        },
+        computed:{
+            rules(){
+                let rules = this.errors || [];
+
+                switch(this.field.type){
+                    case 'email':
+                        rules.push( (v) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v)||'');//Todo: add email error message
+                        break;
+                    default:
+                }
+
+                return rules;
+            }
+        }
     }
 </script>

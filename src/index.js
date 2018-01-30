@@ -4,27 +4,24 @@ import Formidable from './Formidable';
 
 export default {
     install(Vue, options) {
-        let style= options && options.style?options.style:'bootstrap4';
-        console.log({options,style})
+        let style = options && options.template?options.template:'bootstrap4';
+        let template = require(`./Fields/${style}/index`).default;//'./Fields/'+style+'/index'
+
         options = Object.assign({
             //Defaults
             formidableName  : 'formidable',
             fieldName       : 'form-field',
-            fieldResolver   : require('./Fields/'+style+'/index').default
+            resolver        : template.resolver,
         },options);
-
-        console.info({
-            extends:Formidable,
-            methods:{
-                resolveFieldComponent:options.resolveFieldComponent
-            },
-        });
 
         //Load main Formidable component
         Vue.component(options.formidableName,{
             extends:Formidable,
+            components:{
+                errorTemplate:template.errorTemplate||require('./Fields/ErrorTemplate')
+            },
             methods:{
-                resolveFieldComponent:options.fieldResolver
+                resolveFieldComponent: options.resolver,
             },
         });
 

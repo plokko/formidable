@@ -19,7 +19,7 @@ You can set optional settings in the parameter during inizialization:
 
 import Formidable from 'formidable-vue';
 Vue.use(Formidable,{
-  style           :'vuetify', //Use Vuetify style
+  template        : 'vuetify', //Use Vuetify template
   formidableName  : 'formidable', //Name of the main formidable field
   fieldName       : 'form-field', //TBD
   fieldResolver   : require('./Fields/'+style+'/index').default //TBD
@@ -32,6 +32,7 @@ In your page
     <div id="app">
         <formidable
                 action="destination-url"
+                method="post"
                 :fields="fields"
                 @submit="onSubmit"
                 @error="onError"
@@ -67,5 +68,5 @@ In your page
 
 ## Templating
 Formidable integrates a template manager so you can easly switch between css frameworks without adapting or rewriting your code.
-The template you want to use is specified in the plugin initialization, via the _style_ option;
-each style is located under a folder with it's name, each folder has a index.js that resolves all the input types.
+The template you want to use is specified in the plugin initialization, via the _template_ option;
+each template is located under a folder with it's name, each folder has a index.js that resolves all the input types.
