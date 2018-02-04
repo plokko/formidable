@@ -18,6 +18,10 @@
             :items="field.values"
 
             v-model="model"
+
+            :item-text="field.itemText|'text'"
+            :item-value="field.itemText|'text'"
+
             :error-messages="field.errors||[]"
             ></v-select>
 </template>
