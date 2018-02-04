@@ -19,8 +19,8 @@
 
             v-model="model"
 
-            :item-text="field.itemText|'text'"
-            :item-value="field.itemText|'text'"
+            :item-text="field.itemText|field.itemValue|'text'"
+            :item-value="field.itemValue|'value'"
 
             :error-messages="field.errors||[]"
             ></v-select>
