@@ -3,6 +3,8 @@
         :label="field.label || name"
         v-model="model"
 
+        :type="field.type"
+
         :required="field.required"
         :disabled="field.disabled"
 
@@ -14,7 +16,11 @@
         :append-icon="field.appendIcon"
         :box="field.box"
 
-        ></v-text-field>
+        :multi-line="field.multiLine || field.type=='textarea'"
+
+        :error-messages="field.errors||[]"
+
+    ></v-text-field>
 </template>
 <script>
     import Field from '../Field';
@@ -24,7 +30,7 @@
         },
         computed:{
             rules(){
-                let rules = this.errors || [];
+                let rules = [];
 
                 switch(this.field.type){
                     case 'email':

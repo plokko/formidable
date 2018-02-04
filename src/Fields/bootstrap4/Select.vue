@@ -13,9 +13,9 @@
 
                 >
                 <!--<option v-if="!field.required && !field.multiple"></option>-->
-                <option v-for="(label,value) in field.values"
-                        :value="''+value"
-                        >{{label}}</option>
+                <option v-for="(item) in field.values"
+                        :value="''+item.value"
+                        >{{item.text}}</option>
         </select>
         <small class="form-text text-muted" v-if="field.helpText">{{field.helpText}}</small>
 
