@@ -87,7 +87,7 @@
                         bus:this.bus,
                         value:this.fieldValues[field.name],
                         errors:this.fieldErrors[field.name],
-                        component:  this.resolveFieldComponent(field.type),
+                        component:  field.component || this.resolveFieldComponent(field.type),
                     };
                 });
                 return fields;
