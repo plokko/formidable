@@ -32,5 +32,3 @@
         name: "select",
     }
 </script>
-<scss scoped>
-</scss>

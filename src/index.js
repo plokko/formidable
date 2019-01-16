@@ -1,10 +1,10 @@
 import Formidable from './Formidable';
-
-//export default Formidable;
+import ErrorTemplate from './Fields/ErrorTemplate'
+import FormField from './FormField'
 
 export default {
     install(Vue, options) {
-        let style = options && options.template?options.template:'bootstrap4';
+        let style = options && options.template?options.template:'bootstrap4';''
         let template = require(`./Fields/${style}/index`).default;//'./Fields/'+style+'/index'
 
         options = Object.assign({
@@ -18,7 +18,7 @@ export default {
         Vue.component(options.formidableName,{
             extends:Formidable,
             components:{
-                errorTemplate:template.errorTemplate||require('./Fields/ErrorTemplate')
+                errorTemplate:template.errorTemplate||ErrorTemplate
             },
             methods:{
                 resolveFieldComponent: options.resolver,
@@ -26,6 +26,6 @@ export default {
         });
 
         //Load form-field component
-        Vue.component(options.fieldName,require('./FormField'));
+        Vue.component(options.fieldName,FormField);
     }
 };

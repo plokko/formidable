@@ -11,7 +11,8 @@
     </v-alert>
 </template>
 <script>
+    import ErrorTemplate from '../ErrorTemplate'
     export default{
-        extends: require('../ErrorTemplate'),
+        extends: ErrorTemplate,
     }
 </script>

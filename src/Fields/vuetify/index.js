@@ -1,17 +1,21 @@
+import ErrorTemplate from './ErrorTemplate'
+import Checkbox from './Checkbox';
+import Select from './Select';
+import Input from './Input';
 export default {
 
-    errorTemplate : require('./ErrorTemplate'),
+    errorTemplate : ErrorTemplate,
 
     resolver(type){
         switch(type){
             /*
             case 'textarea' : return require('./Textarea');
             //*/
-            case 'checkbox' : return require('./Checkbox');
-            case 'select'   : return require('./Select');
+            case 'checkbox' : return Checkbox;
+            case 'select'   : return Select;
             //Default component
             case 'textarea':case 'text':
-            default         : return require('./Input');
+            default         : return Input;
         }
     }
 };

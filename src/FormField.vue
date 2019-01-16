@@ -34,5 +34,3 @@
         }
     }
 </script>
-<scss scoped>
-</scss>

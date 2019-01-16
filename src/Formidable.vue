@@ -34,6 +34,8 @@
     </form>
 </template>
 <script>
+    import FormField from './FormField';
+
     export default {
         name: "formidable",
         props: {
@@ -206,7 +208,7 @@
 
         },
         components: {
-            'form-field' : require('./FormField.vue'),
+            FormField,
         },
         filters: {
             getFieldcomponent(field){
@@ -230,5 +232,3 @@
         }
     }
 </script>
-<scss scoped>
-</scss>
