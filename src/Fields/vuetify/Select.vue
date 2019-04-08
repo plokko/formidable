@@ -19,8 +19,8 @@
 
             v-model="model"
 
-            :item-text="field.itemText|field.itemValue|'text'"
-            :item-value="field.itemValue|'value'"
+            :item-text="field | itemText"
+            :item-value="field | itemValue"
 
             :error-messages="field.errors||[]"
             ></v-select>
@@ -29,6 +29,14 @@
     import Field from '../Field';
     export default{
         extends: Field,
-        name: "select",
+        name: "v-select",
+		filters:{
+			itemText(field){
+				return field.itemText || field.itemValue || 'text'
+			},
+			itemValue(field){
+				return field.itemValue||'value'
+			}
+		}
     }
 </script>
